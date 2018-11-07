@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     let allQuestions = QuestinBank()
     var pickedAnswer: Bool = false
     var questionNumber: Int = 0
+    var score = 0
 
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -33,7 +34,6 @@ class ViewController: UIViewController {
             pickedAnswer = false
         }
 
-
         checkAnswer()
 
         questionNumber = questionNumber + 1
@@ -43,16 +43,20 @@ class ViewController: UIViewController {
 
 
     func updateUI() {
-
+        scoreLabel.text = "Score: \(score)"
+        progressLabel.text = "\(questionNumber) of 13"
     }
 
 
     func nextQuestion() {
 
         if questionNumber <= 12 {
+            
             questionLabel.text = allQuestions.list[questionNumber].questionText
+            updateUI()
         }
         else {
+            
             print("Koniec konkursu")
 
             let alert = UIAlertController(title: "Super", message: "Wszystkie pytania przerobione. Jeszcze raz?", preferredStyle: .alert)
@@ -74,6 +78,7 @@ class ViewController: UIViewController {
 
         if correctAnswer == pickedAnswer {
             print("Bardzo dobrze!")
+            score = score + 1
         }
         else {
             print("Źle!!!")
@@ -83,6 +88,7 @@ class ViewController: UIViewController {
 
     func startOver() {
         questionNumber = 0
+        score = 0
         nextQuestion()
     }
 
